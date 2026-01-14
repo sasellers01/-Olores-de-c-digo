@@ -9,7 +9,7 @@ public class Facturador{
 	};
 
 	//Actuaciones realizadas indicando el concierto ofrecido y audiencias obtenidas.
-	static Integer[][] actuaciones = {{0, 250}, {2, 2000}, {0, 3000}, {3, 400}};
+	static Integer[][] actuaciones = {{0, 250}, {2, 2000}, {0, 3000}, {3, 400}, {1, 1200}};
 
 	static String cliente = "Ayuntamiento de Badajoz";
 
