@@ -4,7 +4,7 @@ public class Facturador{
 	static String[][] repertorio = {
 		 {"Tributo Robe", "heavy"}
 		,{"Homanaje Queen", "rock"}
-		,{"Magia Knoppler", "rock"}
+		,{"Magia Knoppler", "pop"}
 		,{"Demonios Rojos", "heavy"}
 	};
 
