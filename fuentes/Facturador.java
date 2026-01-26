@@ -52,6 +52,5 @@ public class Facturador{
 		System.out.printf("IVA (21%%): %.2f euros\n", totalFactura * 0.21);
 		System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * 1.21);
 		System.out.println("Créditos obtenidos: " + creditos);
-
 	}
 }
