@@ -3,13 +3,13 @@ public class Facturador{
 	//Repertorio de conciertos del grupo
 	static String[][] repertorio = {
 		 {"Tributo Robe", "heavy"}
-		,{"Homanaje Queen", "rock"}
-		,{"Magia Knoppler", "pop"}
+		,{"Homenaje Queen", "rock"}
+		,{"Magia Knoppler", "rock"}
 		,{"Demonios Rojos", "heavy"}
 	};
 
 	//Actuaciones realizadas indicando el concierto ofrecido y audiencias obtenidas.
-	static Integer[][] actuaciones = {{0, 250}, {2, 2000}, {0, 3000}, {3, 400}, {1, 1200}};
+	static Integer[][] actuaciones = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
 
 	static String cliente = "Ayuntamiento de Badajoz";
 
