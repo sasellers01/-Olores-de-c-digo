@@ -10,7 +10,7 @@ public class Facturador{
 	private static final Integer RELACION_ASISTENCIAS_CREDITOS = 5;
 
 	//Repertorio de conciertos del grupo
-	static String[][] repertorio = {
+	static String[][] conciertos = {
 		 {"Tributo Robe", "heavy"}
 		,{"Homenaje Queen", "rock"}
 		,{"Magia Knoppler", "rock"}
@@ -18,7 +18,7 @@ public class Facturador{
 	};
 
 	//Actuaciones realizadas indicando el concierto ofrecido y audiencias obtenidas.
-	static Integer[][] actuaciones = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
+	static Integer[][] actuacionesRealizadas = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
 
 	static String cliente = "Ayuntamiento de Badajoz";
 
@@ -29,10 +29,10 @@ public class Facturador{
 		System.out.println("FACTURA DE ACTUACIONES");
 		System.out.println("Cliente: " + cliente);
 
-		for(int i = 0; i < actuaciones.length; i++){
-			Integer iConcierto = actuaciones[i][0];
-			String tipo = repertorio[iConcierto][1];
-			Integer asistentes = actuaciones[i][1];
+		for(int i = 0; i < actuacionesRealizadas.length; i++){
+			Integer indiceConcierto = actuacionesRealizadas[i][0];
+			String tipo = conciertos[indiceConcierto][1];
+			Integer asistentes = actuacionesRealizadas[i][1];
 			totalFactura += calcularImporteActuacion(tipo, asistentes);
 			creditos += calcularCreditos(tipo, asistentes);
 			System.out.println("\tConcierto: " + tipo);
