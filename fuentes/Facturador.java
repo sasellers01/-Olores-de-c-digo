@@ -1,5 +1,14 @@
 public class Facturador{
 
+	private static final Float PORCENTAJE_IVA = 0.21f;
+	private static final Double BASE_HEAVY = 4000d;
+	private static final Double BASE_ROCK = 3000d;
+	private static final Integer UMBRAL_HEAVY = 20;
+	private static final Integer UMBRAL_ROCK = 30;
+	private static final Integer EXTRA_HEAVY = 500;
+	private static final Integer EXTRA_ROCK = 1000;
+	private static final Integer RELACION_ASISTENCIAS_CREDITOS = 5;
+
 	//Repertorio de conciertos del grupo
 	static String[][] repertorio = {
 		 {"Tributo Robe", "heavy"}
@@ -31,8 +40,8 @@ public class Facturador{
 			
 		}
 		System.out.println("BASE IMPONIBLE: " + totalFactura + " euros");
-		System.out.printf("IVA (21%%): %.2f euros\n", totalFactura * 0.21);
-		System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * 1.21);
+		System.out.printf("IVA (21%%): %.2f euros\n", totalFactura * PORCENTAJE_IVA);
+		System.out.printf("TOTAL FACTURA: %.2f euros\n", totalFactura * (1 + PORCENTAJE_IVA));
 		System.out.println("Créditos obtenidos: " + creditos);
 	}
 	
@@ -40,14 +49,14 @@ public class Facturador{
 		Double importeActuacion = 0d;
 		switch (tipo){
 			case "heavy":
-				importeActuacion = 4000d;
-				if (asistentes > 500)
-					importeActuacion += 20 * (asistentes - 500);
+				importeActuacion = BASE_HEAVY;
+				if (asistentes > EXTRA_HEAVY)
+					importeActuacion += UMBRAL_HEAVY * (asistentes - EXTRA_HEAVY);
 				break;
 			case "rock":
-				importeActuacion = 3000d;
-				if (asistentes > 1000)
-					importeActuacion += 30 * (asistentes - 1000);
+				importeActuacion = BASE_ROCK;
+				if (asistentes > EXTRA_ROCK)
+					importeActuacion += UMBRAL_ROCK * (asistentes - EXTRA_ROCK);
 				break;
 			default:
 				throw new Exception("Tipo de concierto desconocido.");
@@ -57,9 +66,9 @@ public class Facturador{
 	
 	public static Integer calcularCreditos(String tipo, Integer asistentes) throws Exception {
 		Integer creditos = 0;
-		creditos += Math.max(asistentes - 500, 0);
+		creditos += Math.max(asistentes - EXTRA_HEAVY, 0);
 		if (tipo.equals("heavy"))
-			creditos += asistentes / 5;
+			creditos += asistentes / RELACION_ASISTENCIAS_CREDITOS;
 		return creditos;
 	}
 }
