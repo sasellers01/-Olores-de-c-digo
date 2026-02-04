@@ -8,6 +8,8 @@ public class Facturador{
 	private static final Integer EXTRA_HEAVY = 500;
 	private static final Integer EXTRA_ROCK = 1000;
 	private static final Integer RELACION_ASISTENCIAS_CREDITOS = 5;
+	
+	private enum TipoConcierto { HEAVY, ROCK };
 
 	//Repertorio de conciertos del grupo
 	static String[][] conciertos = {
@@ -47,13 +49,14 @@ public class Facturador{
 	
 	public static Double calcularImporteActuacion(String tipo, Integer asistentes) throws Exception {
 		Double importeActuacion = 0d;
-		switch (tipo){
-			case "heavy":
+		TipoConcierto tipoConcierto = TipoConcierto.valueOf(tipo.trim().toUpperCase());
+		switch (tipoConcierto){
+			case TipoConcierto.HEAVY:
 				importeActuacion = BASE_HEAVY;
 				if (asistentes > EXTRA_HEAVY)
 					importeActuacion += UMBRAL_HEAVY * (asistentes - EXTRA_HEAVY);
 				break;
-			case "rock":
+			case TipoConcierto.ROCK:
 				importeActuacion = BASE_ROCK;
 				if (asistentes > EXTRA_ROCK)
 					importeActuacion += UMBRAL_ROCK * (asistentes - EXTRA_ROCK);
