@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Facturador{
 
 	private static final Float PORCENTAJE_IVA = 0.21f;
@@ -20,24 +22,29 @@ public class Facturador{
 	};
 
 	//Actuaciones realizadas indicando el concierto ofrecido y audiencias obtenidas.
-	static Integer[][] actuacionesRealizadas = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
-
+	static Integer[][] datosActuaciones = {{0, 2000}, {2, 1200}, {0, 950}, {3, 1140}};
+	
 	static String cliente = "Ayuntamiento de Badajoz";
-
+	
 	public static void main(String[] args) throws Exception{
 		Double totalFactura = 0d;
 		Integer creditos = 0;
 
 		System.out.println("FACTURA DE ACTUACIONES");
 		System.out.println("Cliente: " + cliente);
+		
+		List<Actuacion> listaActuaciones = crearListaActuaciones(datosActuaciones);
 
-		for(int i = 0; i < actuacionesRealizadas.length; i++){
-			Integer indiceConcierto = actuacionesRealizadas[i][0];
-			String tipo = conciertos[indiceConcierto][1];
-			Integer asistentes = actuacionesRealizadas[i][1];
-			totalFactura += calcularImporteActuacion(tipo, asistentes);
-			creditos += calcularCreditos(tipo, asistentes);
-			System.out.println("\tConcierto: " + tipo);
+		for (Actuacion actuacion : listaActuaciones) {
+			Integer indiceConcierto = actuacion.indiceConcierto();
+			Integer asistentes = actuacion.asistentes();
+			
+			String tipoActuacion = conciertos[indiceConcierto][1];
+			
+			totalFactura += calcularImporteActuacion(tipoActuacion, asistentes);
+			creditos += calcularCreditos(tipoActuacion, asistentes);
+			
+			System.out.println("\tConcierto: " + conciertos[indiceConcierto][0]);
 			System.out.println("\t\tAsistentes: " + asistentes);
 			
 		}
@@ -47,16 +54,27 @@ public class Facturador{
 		System.out.println("Créditos obtenidos: " + creditos);
 	}
 	
+	public static List<Actuacion> crearListaActuaciones(Integer[][] datosActuaciones) {
+		List<Actuacion> listaActuaciones = new ArrayList<>();
+		for (Integer[] datosActuacion : datosActuaciones) {
+			Integer indiceConcierto = datosActuacion[0];
+			Integer asistentes = datosActuacion[1];
+			Actuacion actuacion = new Actuacion(indiceConcierto, asistentes);
+			listaActuaciones.add(actuacion);
+		}
+		return listaActuaciones;
+	}
+	
 	public static Double calcularImporteActuacion(String tipo, Integer asistentes) throws Exception {
 		Double importeActuacion = 0d;
 		TipoConcierto tipoConcierto = TipoConcierto.valueOf(tipo.trim().toUpperCase());
 		switch (tipoConcierto){
-			case TipoConcierto.HEAVY:
+			case HEAVY:
 				importeActuacion = BASE_HEAVY;
 				if (asistentes > EXTRA_HEAVY)
 					importeActuacion += UMBRAL_HEAVY * (asistentes - EXTRA_HEAVY);
 				break;
-			case TipoConcierto.ROCK:
+			case ROCK:
 				importeActuacion = BASE_ROCK;
 				if (asistentes > EXTRA_ROCK)
 					importeActuacion += UMBRAL_ROCK * (asistentes - EXTRA_ROCK);
@@ -70,8 +88,10 @@ public class Facturador{
 	public static Integer calcularCreditos(String tipo, Integer asistentes) throws Exception {
 		Integer creditos = 0;
 		creditos += Math.max(asistentes - EXTRA_HEAVY, 0);
-		if (tipo.equals("heavy"))
+		if (tipo.equalsIgnoreCase("heavy"))
 			creditos += asistentes / RELACION_ASISTENCIAS_CREDITOS;
 		return creditos;
 	}
 }
+
+record Actuacion(Integer indiceConcierto, Integer asistentes) {}
